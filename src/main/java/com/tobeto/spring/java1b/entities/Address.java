@@ -1,6 +1,7 @@
 package com.tobeto.spring.java1b.entities;
 
 import jakarta.persistence.*;
+//test
 
 @Entity
 @Table(name = "addresses")
