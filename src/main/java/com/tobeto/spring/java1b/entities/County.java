@@ -1,11 +1,16 @@
 package com.tobeto.spring.java1b.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name="counties")
+@Getter
+@Setter
 public class County {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +20,7 @@ public class County {
     private String name;
 
     @OneToMany(mappedBy = "county")
+    @JsonIgnore
     private List<Address> addresses;
 
     @ManyToOne

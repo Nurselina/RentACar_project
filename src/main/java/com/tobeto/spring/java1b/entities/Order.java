@@ -1,12 +1,17 @@
 package com.tobeto.spring.java1b.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name="orders")
+@Getter
+@Setter
 public class Order {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +26,9 @@ public class Order {
    @Column(name="end_rent")
    private  LocalDate endRent;
 
-   @OneToMany(mappedBy = "order")
-   private List<Car> cars;
+   @ManyToOne
+   @JoinColumn(name="car_id")
+   private Car car;
 
    @ManyToOne
    @JoinColumn(name="customer_id")
@@ -31,7 +37,5 @@ public class Order {
    @ManyToOne
    @JoinColumn(name = "company_id")
    private Company company;
-
-
 
 }

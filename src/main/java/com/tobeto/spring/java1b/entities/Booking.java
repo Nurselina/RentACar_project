@@ -1,12 +1,17 @@
 package com.tobeto.spring.java1b.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "bookings")
+@Getter
+@Setter
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +30,10 @@ public class Booking {
     @JoinColumn(name = "company_id")
     private Company company;
 
-   @OneToMany(mappedBy = "booking")
-    private List<Car> cars;
+
+    @ManyToOne
+    @JoinColumn(name="car_id")
+    private Car car;
 
 
 }

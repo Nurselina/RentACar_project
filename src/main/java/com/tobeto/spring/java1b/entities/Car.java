@@ -1,9 +1,16 @@
 package com.tobeto.spring.java1b.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="cars")
+@Data // getter setter aynı anda ikisinide ekler
+@AllArgsConstructor
+@NoArgsConstructor
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,19 +29,21 @@ public class Car {
     @Column(name="price")
     private double price;
 
-    @ManyToOne
-    @JoinColumn(name="brand_id")
-    private Brand brand;
-
-    @ManyToOne
-    @JoinColumn(name="order_id")
-    private Order order;
-
-    @ManyToOne
-    @JoinColumn(name="booking_id")
-    private Booking booking;
+   // @ManyToOne
+    //@JoinColumn(name="brand_id")
+    //private Brand brand;
 
 
+    @OneToMany(mappedBy = "car")
+    @JsonIgnore
+    private List<Booking> bookings;
+
+    @OneToMany(mappedBy ="car" )
+    @JsonIgnore
+    private List<Order> orders;
+
+    @ManyToOne(cascade = CascadeType.ALL) // Hibernate, cascade = CascadeType.ALL argümanı nedeniyle, Brand nesnesini de otomatik olarak kaydeder
+    private Brand brand; // cascade = CascadeType.ALL argümanı, yalnızca ManyToOne ilişkileri için kullanılabilir.
 
 
 }
