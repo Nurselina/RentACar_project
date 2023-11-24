@@ -29,7 +29,7 @@ public class BookingsController {
         bookingRepository.save(booking);
     }
     @PutMapping("{id}")
-    public void update(@RequestBody Booking booking){
+    public void update(@PathVariable int id,@RequestBody Booking booking){
         bookingRepository.findById(booking.getId()).orElseThrow();
         bookingRepository.save(booking);
 

@@ -29,7 +29,7 @@ public class CountiesController {
         countyRepository.save(county);
     }
     @PutMapping("{id}")
-    public void update(@RequestBody County county){
+    public void update(@PathVariable int id,@RequestBody County county){
         countyRepository.findById(county.getId()).orElseThrow();
         countyRepository.save(county);
     }

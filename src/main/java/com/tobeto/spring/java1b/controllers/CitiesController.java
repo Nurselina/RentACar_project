@@ -29,7 +29,7 @@ public class CitiesController {
         cityRepository.save(city);
     }
     @PutMapping("{id}")
-    public void update(@RequestBody City city){
+    public void update(@PathVariable int id,@RequestBody City city){
         cityRepository.findById(city.getId()).orElseThrow();
         cityRepository.save(city);
     }

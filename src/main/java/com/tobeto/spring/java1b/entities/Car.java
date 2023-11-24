@@ -29,9 +29,9 @@ public class Car {
     @Column(name="price")
     private double price;
 
-   // @ManyToOne
-    //@JoinColumn(name="brand_id")
-    //private Brand brand;
+    @ManyToOne
+    @JoinColumn(name="brand_id")
+    private Brand brand;
 
 
     @OneToMany(mappedBy = "car")
@@ -42,8 +42,8 @@ public class Car {
     @JsonIgnore
     private List<Order> orders;
 
-    @ManyToOne(cascade = CascadeType.ALL) // Hibernate, cascade = CascadeType.ALL argümanı nedeniyle, Brand nesnesini de otomatik olarak kaydeder
-    private Brand brand; // cascade = CascadeType.ALL argümanı, yalnızca ManyToOne ilişkileri için kullanılabilir.
+   // @ManyToOne(cascade = CascadeType.ALL) // Hibernate, cascade = CascadeType.ALL argümanı nedeniyle, Brand nesnesini de otomatik olarak kaydeder
+   // private Brand brand; // cascade = CascadeType.ALL argümanı, yalnızca ManyToOne ilişkileri için kullanılabilir.
 
 
 }
