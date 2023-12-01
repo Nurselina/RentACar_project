@@ -1,11 +1,13 @@
 package com.tobeto.spring.java1b.controllers;
 
-import com.tobeto.spring.java1b.dtos.requests.car.AddCarRequest;
-import com.tobeto.spring.java1b.dtos.requests.car.UpdateCarRequest;
-import com.tobeto.spring.java1b.dtos.responses.car.GetCarListResponse;
-import com.tobeto.spring.java1b.dtos.responses.car.GetCarResponse;
+import com.tobeto.spring.java1b.services.abstracts.CarService;
+import com.tobeto.spring.java1b.services.dtos.requests.car.AddCarRequest;
+import com.tobeto.spring.java1b.services.dtos.requests.car.UpdateCarRequest;
+import com.tobeto.spring.java1b.services.dtos.responses.car.GetCarListResponse;
+import com.tobeto.spring.java1b.services.dtos.responses.car.GetCarResponse;
 import com.tobeto.spring.java1b.entities.Car;
 import com.tobeto.spring.java1b.repositories.CarRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,65 +16,34 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/cars")
+@AllArgsConstructor
 public class CarsController {
-    private final CarRepository carRepository;
+    private final CarService carService;
 
-    public CarsController(CarRepository carRepository) {
 
-        this.carRepository = carRepository;
-    }
 
     @GetMapping
     public List<GetCarListResponse> getAll(){
-        List<Car> carList=carRepository.findAll();
-        List<GetCarListResponse> getCarListResponses =new ArrayList<>();
-        for (Car car: carList){
-            GetCarListResponse response =new GetCarListResponse();
-            response.setModelName(car.getModelName());
-            response.setFuelType(car.getFuelType());
-            response.setPrice(car.getPrice());
-            getCarListResponses.add(response);
-        }
-        return getCarListResponses;
+       return carService.getAll();
     }
 
     @GetMapping("{id}")
     public GetCarResponse getById(@PathVariable int id){
-        Car car = carRepository.findById(id).orElseThrow();
-        GetCarResponse getCarResponse=new GetCarResponse();
-        getCarResponse.setModelYear(car.getModelYear());
-        getCarResponse.setModelName(car.getModelName());
-        getCarResponse.setPrice(car.getPrice());
-
-        return getCarResponse;
-
+       return carService.getById(id);
 
     }
     @PostMapping
     public void add(@RequestBody AddCarRequest carAdd){
-        Car car =new Car();
-        car.setModelYear(carAdd.getModelYear());
-        car.setModelName(carAdd.getModelName());
-        carRepository.save(car);
+       carService.add(carAdd);
     }
     @PutMapping("{id}")
     public void update(@PathVariable int id, @RequestBody UpdateCarRequest carUpdate) throws Exception {
-        Optional<Car> optionalCar = carRepository.findById(id);
-
-        if (optionalCar.isPresent()) {
-            Car car = optionalCar.get();
-            car.setModelName(carUpdate.getModelName());
-            car.setFuelType(carUpdate.getFuelType());
-            car.setPrice(carUpdate.getPrice());
-            carRepository.save(car);
-        } else {
-             throw new Exception("Güncellenemedi.");
-        }
+       carService.update(id,carUpdate);
 
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
-        carRepository.deleteById(id);
+        carService.delete(id);
 
     }
   }

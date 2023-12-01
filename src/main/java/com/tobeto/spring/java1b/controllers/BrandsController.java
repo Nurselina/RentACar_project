@@ -1,32 +1,34 @@
 package com.tobeto.spring.java1b.controllers;
 
-import com.tobeto.spring.java1b.dtos.requests.brand.AddBrandRequest;
-import com.tobeto.spring.java1b.dtos.responses.brand.GetBrandListResponse;
-import com.tobeto.spring.java1b.dtos.responses.brand.GetBrandResponse;
+import com.tobeto.spring.java1b.services.abstracts.BrandService;
+import com.tobeto.spring.java1b.services.dtos.requests.brand.AddBrandRequest;
+import com.tobeto.spring.java1b.services.dtos.requests.brand.UpdateBrandRequest;
+import com.tobeto.spring.java1b.services.dtos.responses.brand.GetBrandListResponse;
+import com.tobeto.spring.java1b.services.dtos.responses.brand.GetBrandResponse;
 import com.tobeto.spring.java1b.entities.Brand;
 import com.tobeto.spring.java1b.repositories.BrandRepository;
+import com.tobeto.spring.java1b.services.dtos.responses.car.GetCarListResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("api/brands")
 public class BrandsController {
     //Dependency =>  bağımlılık
     //Injection =>  Enjekte
-    private final BrandRepository brandRepository;
+    private final BrandService brandService;
   //final => ctor blok dışında set edemezsiniz.
-    public BrandsController(BrandRepository brandRepository){
 
-        this.brandRepository=brandRepository;
-
-    }
 
     @GetMapping
-    public List<Brand> getAll(){
+    public List<GetBrandListResponse> getAll(){
+        return brandService.getAll();
 
-        return brandRepository.findAll();
     }
 
     //Spring IoC container
@@ -35,37 +37,21 @@ public class BrandsController {
     //BrandForDetailDto doğru!
     public GetBrandResponse getById(@PathVariable int id){
 
-        // Optional<T> => ilgili filtreden bir veri dönmeyebilir
-        Brand brand = brandRepository.findById(id).orElseThrow();
-
-        GetBrandResponse dto = new GetBrandResponse();
-        dto.setName(brand.getName());
-
-        return dto;
+      return brandService.getById(id);
     }
     @PostMapping
     //Brand  yanlış!
     //BrandForAddDto  doğru!
     public void add(@RequestBody AddBrandRequest request){
-
-       //Manuel Mapping => Auto Mapping
-        Brand brand=new Brand();
-        brand.setName(request.getName());
-
-        brandRepository.save(brand);
+        brandService.add(request);
     }
-    @PutMapping
-    public void update(@PathVariable int id,@RequestBody Brand brand){
-        brandRepository.findById(brand.getId()).orElseThrow();
-        brandRepository.save(brand);
+    @PutMapping("{id}")
+    public void update(@PathVariable int id, @RequestBody UpdateBrandRequest updateBrandRequest){
+       brandService.update(id,updateBrandRequest);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
-        // kod buraya geliyor ise exception fırlamamıştır..
-       // Brand brandToDelete=brandRepository.findById(id).orElseThrow();
-       //özel kontroller
-        // brandRepository.delete(brandToDelete);
-       brandRepository.deleteById(id);
+      brandService.delete(id);
 
     }
 
