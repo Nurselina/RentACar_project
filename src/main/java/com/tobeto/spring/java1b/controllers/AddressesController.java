@@ -47,4 +47,24 @@ public class AddressesController {
         addressService.delete(id);
 
     }
+    @GetMapping("textPostaCode")
+    public List<GetAddressListResponse> textPostaCode(@RequestParam String postalCode, String text) {
+
+       return addressService.textPostaCode(postalCode, text);
+    }
+
+    @GetMapping("text")
+    public GetAddressResponse text (@RequestParam String text){
+
+        return addressService.text(text);
+    }
+
+    @GetMapping("findByAddressText")
+    public List<GetAddressListResponse> findByAddressText(@RequestParam String addressText){
+        return addressService.findByAddressText(addressText);
+    }
+    @GetMapping("postalCodeAndAddressText")
+    public List<GetAddressListResponse> postalCodeAndAddressText(@RequestParam String postalCode, String addressText){
+        return addressService.postalCodeAndAddressText(postalCode,addressText);
+    }
 }

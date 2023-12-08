@@ -14,4 +14,6 @@ public interface CustomerService {
     void add(AddCustomerRequest customerAdd);
     void update(int id, UpdateCustomerRequest updateCustomerRequest) throws Exception;
     void delete(int id);
+    List<GetCustomerListResponse> isNull ();
+    List<GetCustomerListResponse> ignoreName(String name);
 }

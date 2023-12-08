@@ -10,6 +10,7 @@ import com.tobeto.spring.java1b.services.dtos.responses.booking.GetBookingRespon
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,4 +70,41 @@ public class BookingManager implements BookingService {
     public void delete(int id) {
         bookingRepository.deleteById(id);
     }
+
+    @Override
+    public List<GetBookingListResponse> betweenDate(LocalDate date1, LocalDate date2) {
+        List<Booking> bookingList=bookingRepository.findByStartDateBetween(date1, date2);
+        List<GetBookingListResponse> getBookingListResponses=new ArrayList<>();
+        for (Booking booking: bookingList){
+            GetBookingListResponse response= new GetBookingListResponse();
+            response.setStartDate(booking.getStartDate());
+            response.setEndDate(booking.getEndDate());
+            getBookingListResponses.add(response);
+        }
+        return getBookingListResponses;
+    }
+
+    @Override
+    public List<GetBookingListResponse> startDateAfter(LocalDate date) {
+        List<Booking> bookingList =bookingRepository.findByStartDateAfter(date);
+        List<GetBookingListResponse> getBookingListResponses= new ArrayList<>();
+        for (Booking booking : bookingList){
+            GetBookingListResponse response = new GetBookingListResponse();
+            response.setStartDate(booking.getStartDate());
+            response.setEndDate(booking.getEndDate());
+            getBookingListResponses.add(response);
+        }
+        return getBookingListResponses;
+    }
+
+    @Override
+    public List<GetBookingListResponse> findByEndDate(LocalDate endDate) {
+        return bookingRepository.findByEndDate(endDate);
+    }
+
+    @Override
+    public List<GetBookingListResponse> endDateIsNull() {
+        return bookingRepository.findByEndDate(null);
+    }
+
 }

@@ -43,5 +43,13 @@ public class CustomersController {
         customerService.delete(id);
 
     }
+    @GetMapping("isNull")
+    public List<GetCustomerListResponse> isNull (){
+        return customerService.isNull();
+    }
 
+    @GetMapping("ignoreName")
+    public List<GetCustomerListResponse> ignoreName(String name){
+        return customerService.ignoreName(name);
+    }
 }

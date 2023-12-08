@@ -8,6 +8,7 @@ import com.tobeto.spring.java1b.services.dtos.responses.brand.GetBrandResponse;
 import com.tobeto.spring.java1b.entities.Brand;
 import com.tobeto.spring.java1b.repositories.BrandRepository;
 import com.tobeto.spring.java1b.services.dtos.responses.car.GetCarListResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +43,8 @@ public class BrandsController {
     @PostMapping
     //Brand  yanlış!
     //BrandForAddDto  doğru!
-    public void add(@RequestBody AddBrandRequest request){
+    public void add(@RequestBody @Valid AddBrandRequest request){
+
         brandService.add(request);
     }
     @PutMapping("{id}")
@@ -54,6 +56,26 @@ public class BrandsController {
       brandService.delete(id);
 
     }
+     @GetMapping("api/name")
+    public  List<GetBrandListResponse> getByName(@RequestParam String name, @RequestParam int id){
+        return this.brandService.getByName(name,id);
+     }
+
+     @GetMapping("search")
+    public List<Brand> search(@RequestParam String name){
+        return this.brandService.search(name);
+     }
+
+    @GetMapping("search2")
+    public List<Brand> search2(@RequestParam String name){
+        return this.brandService.search2(name);
+    }
+    @GetMapping("search3")
+    public List<GetBrandListResponse> search3(@RequestParam String name){
+        return this.brandService.search3(name);
+    }
+
+
 
 }
 //Request -Response pattern

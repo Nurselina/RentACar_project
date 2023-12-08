@@ -15,4 +15,6 @@ public interface CityService {
     void add(AddCityRequest addCityRequest);
     void update(int id, UpdateCityRequest updateCityRequest) throws Exception;
     void delete(int id);
+    List<GetCityListResponse> findName(String name);
+    List<GetCityListResponse> findByName (String name);
 }

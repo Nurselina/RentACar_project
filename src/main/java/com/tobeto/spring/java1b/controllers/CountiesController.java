@@ -44,5 +44,14 @@ public class CountiesController {
         countyService.delete(id);
 
     }
+    @GetMapping("findByName")
+    public List<GetCountyListResponse> findByName(@RequestParam String name){
+       return countyService.findByName(name);
+    }
+    @GetMapping("isNotNull")
+    public GetCountyResponse isNotNull(){
+
+        return countyService.isNotNull();
+    }
 
 }

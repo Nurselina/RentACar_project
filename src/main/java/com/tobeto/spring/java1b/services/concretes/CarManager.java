@@ -5,6 +5,7 @@ import com.tobeto.spring.java1b.repositories.CarRepository;
 import com.tobeto.spring.java1b.services.abstracts.CarService;
 import com.tobeto.spring.java1b.services.dtos.requests.car.AddCarRequest;
 import com.tobeto.spring.java1b.services.dtos.requests.car.UpdateCarRequest;
+import com.tobeto.spring.java1b.services.dtos.responses.brand.GetBrandListResponse;
 import com.tobeto.spring.java1b.services.dtos.responses.car.GetCarListResponse;
 import com.tobeto.spring.java1b.services.dtos.responses.car.GetCarResponse;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,12 @@ public class CarManager implements CarService {
             getCarListResponses.add(response);
         }
         return getCarListResponses;
+    }
+
+    @Override
+    public List<GetCarListResponse> getAll2() {
+
+        return carRepository.getAll2();
     }
 
     @Override

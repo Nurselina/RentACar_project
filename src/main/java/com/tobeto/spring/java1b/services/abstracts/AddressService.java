@@ -14,4 +14,10 @@ public interface AddressService {
     GetAddressResponse getById(int id);
     void update(int id, UpdateAddressRequest updateAddressRequest) throws Exception;
     void delete(int id);
+    List<GetAddressListResponse> textPostaCode(String postalCode, String text);
+    GetAddressResponse text (String text);
+    List<GetAddressListResponse> findByAddressText(String addressText);
+    List<GetAddressListResponse> postalCodeAndAddressText (String postalCode,String addressText);
+
+
 }

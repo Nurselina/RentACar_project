@@ -64,4 +64,29 @@ public class CityManager implements CityService {
     public void delete(int id) {
         cityRepository.deleteById(id);
     }
+
+    @Override
+    public List<GetCityListResponse> findName(String name) {
+        List<City> cityList=cityRepository.findByNameIsContaining(name);
+        List<GetCityListResponse> getCityListResponses=new ArrayList<>();
+        for (City city:cityList){
+            GetCityListResponse response=new GetCityListResponse();
+            response.setName(city.getName());
+            getCityListResponses.add(response);
+        }
+        return getCityListResponses ;
+    }
+
+    @Override
+    public List<GetCityListResponse> findByName(String name) {
+        List<City> cityList=cityRepository.findByName(name);
+        List<GetCityListResponse> getCityListResponses=new ArrayList<>();
+        for (City city:cityList){
+            GetCityListResponse response=new GetCityListResponse();
+            response.setName(city.getName());
+            getCityListResponses.add(response);
+        }
+        return getCityListResponses;
+    }
+
 }

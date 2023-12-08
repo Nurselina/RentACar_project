@@ -45,4 +45,15 @@ public class CitiesController {
 
     }
 
+    @GetMapping("findName")
+    public List<GetCityListResponse> findName(@RequestParam String name){
+        return cityService.findName(name);
+    }
+
+    @GetMapping("findByName")
+    public List<GetCityListResponse> findByName(@RequestParam String name){
+
+        return cityService.findByName(name);
+    }
+
 }

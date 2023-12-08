@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,25 @@ public class BookingsController {
     public void delete(@PathVariable int id){
        bookingService.delete(id);
 
+    }
+    @GetMapping("betweenDate")
+    public List<GetBookingListResponse> betweenDate(@RequestParam LocalDate date1,LocalDate date2){
+        return bookingService.betweenDate(date1, date2);
+    }
+
+    @GetMapping("startDateAfter")
+    public List<GetBookingListResponse> startDateAfter(@RequestParam LocalDate date ){
+        return bookingService.startDateAfter(date);
+    }
+
+    @GetMapping("findByEndDate")
+    public List<GetBookingListResponse> findByEndDate(@RequestParam LocalDate endDate){
+        return bookingService.findByEndDate(endDate);
+    }
+
+    @GetMapping("endDateIsNull")
+    public List<GetBookingListResponse> endDateIsNull (){
+        return bookingService.endDateIsNull();
     }
 
 }

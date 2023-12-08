@@ -21,8 +21,20 @@ public class BrandManager implements BrandService {
 
     @Override
     public void add(AddBrandRequest request) {
-      if(request.getName().length() <2)
-          throw new RuntimeException( "Marka adı 2 haneden kısa olamaz.");
+      //if(request.getName().length() <2)
+         // throw new RuntimeException( "Marka adı 2 haneden kısa olamaz.");
+      //Aynı isimde iki brand olamaz
+
+        //Kural : Metodun en başına iş kuralları ekle. Hata fırlatırsa alt kodu çalıştırmasın.
+       List<Brand> brandWithSameName =brandRepository.findByName(request.getName().trim());
+
+       /*if (brandWithSameName.size() > 0 ){
+           throw  new RuntimeException("Aynı isimle iki marka eklenemez.");
+       }*/
+        if (brandRepository.existsByName(request.getName().trim()))
+        {
+            throw  new RuntimeException("Aynı isimle iki marka eklenemez.");
+        }
 
            Brand brand =new Brand();
            brand.setName(request.getName());
@@ -68,5 +80,31 @@ public class BrandManager implements BrandService {
         //özel kontroller
         // brandRepository.delete(brandToDelete);
         brandRepository.deleteById(id);
+    }
+
+    @Override
+    public List<GetBrandListResponse> getByName(String name, int id) {
+        List<Brand> brands = brandRepository.findByNameLikeOrIdEquals("%"+name+"%", id);
+        List<GetBrandListResponse> response= new ArrayList<>();
+
+        for (Brand brand : brands) {
+            response.add(new GetBrandListResponse(brand.getName()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<Brand> search(String name) {
+        return brandRepository.search(name);
+    }
+
+    @Override
+    public List<Brand> search2(String name) {
+        return brandRepository.search2(name);
+    }
+
+    @Override
+    public List<GetBrandListResponse> search3(String name) {
+        return brandRepository.search3(name);
     }
 }

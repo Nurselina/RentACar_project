@@ -77,4 +77,36 @@ public class CustomerManager implements CustomerService {
     public void delete(int id) {
         customerRepository.deleteById(id);
     }
+
+    @Override
+    public List<GetCustomerListResponse> isNull() {
+        List<Customer> customerList=customerRepository.findByEmailIsNull();
+        List<GetCustomerListResponse> getCustomerListResponses=new ArrayList<>();
+        for (Customer customer: customerList){
+            GetCustomerListResponse responses =new GetCustomerListResponse();
+            responses.setFirstName(customer.getFirstName());
+            responses.setLastName(customer.getLastName());
+            responses.setPhone(customer.getPhone());
+            responses.setDrivingLicanseNo(customer.getDrivingLicanseNo());
+            responses.setEmail(customer.getEmail());
+            getCustomerListResponses.add(responses);
+        }
+        return getCustomerListResponses;
+    }
+
+    @Override
+    public List<GetCustomerListResponse> ignoreName(String name) {
+        List<Customer> customerList=customerRepository.findByFirstNameIgnoreCase(name);
+        List<GetCustomerListResponse> getCustomerListResponses=new ArrayList<>();
+        for (Customer customer:customerList){
+            GetCustomerListResponse response=new GetCustomerListResponse();
+            response.setFirstName(customer.getFirstName());
+            response.setLastName(customer.getLastName());
+            response.setPhone(customer.getPhone());
+            response.setDrivingLicanseNo(customer.getDrivingLicanseNo());
+            response.setEmail(customer.getEmail());
+            getCustomerListResponses.add(response);
+        }
+        return getCustomerListResponses;
+    }
 }

@@ -5,6 +5,7 @@ import com.tobeto.spring.java1b.repositories.CountyRepository;
 import com.tobeto.spring.java1b.services.abstracts.CountyService;
 import com.tobeto.spring.java1b.services.dtos.requests.county.AddCountyRequest;
 import com.tobeto.spring.java1b.services.dtos.requests.county.UpdateCountyRequest;
+import com.tobeto.spring.java1b.services.dtos.responses.city.GetCityListResponse;
 import com.tobeto.spring.java1b.services.dtos.responses.county.GetCountyListResponse;
 import com.tobeto.spring.java1b.services.dtos.responses.county.GetCountyResponse;
 import lombok.AllArgsConstructor;
@@ -61,5 +62,28 @@ public class CountyManager implements CountyService {
     @Override
     public void delete(int id) {
         countyRepository.deleteById(id);
+    }
+
+    @Override
+    public List<GetCountyListResponse> findByName(String name) {
+        List<County> countyList= countyRepository.findByNameEndingWith(name);
+        List<GetCountyListResponse> getCountyListResponses =new ArrayList<>();
+        for (County county: countyList){
+            GetCountyListResponse response= new GetCountyListResponse();
+            GetCityListResponse getCityListResponse = new GetCityListResponse(county.getCity().getName());
+            response.setName(county.getName());
+            response.setGetCityListResponse(getCityListResponse);
+            getCountyListResponses.add(response);
+
+        }
+        return getCountyListResponses;
+    }
+
+    @Override
+    public GetCountyResponse isNotNull() {
+        County county=countyRepository.findFirstByNameIsNotNull();
+        GetCountyResponse countyResponse=new GetCountyResponse();
+        countyResponse.setName(county.getName());
+        return countyResponse;
     }
 }

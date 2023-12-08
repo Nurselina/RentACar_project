@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface CarService {
     List<GetCarListResponse> getAll();
+    List<GetCarListResponse> getAll2();
     GetCarResponse getById(int id);
     void add(AddCarRequest carAdd);
     void update(int id, UpdateCarRequest carUpdate) throws Exception;
