@@ -10,6 +10,7 @@ import com.tobeto.spring.java1b.services.dtos.responses.order.GetOrderResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,5 +77,27 @@ public class OrderManager implements OrderService {
     @Override
     public void delete(int id) {
         orderRepository.deleteById(id);
+    }
+
+    @Override
+    public List<GetOrderListResponse> findByAmountLessThanEqual(double amount) {
+        List<Order> orderList=orderRepository.findByAmountLessThanEqual(amount);
+        List<GetOrderListResponse> getOrderListResponses =new ArrayList<>();
+        for (Order order : orderList){
+            GetOrderListResponse response= new GetOrderListResponse();
+            response.setAmount(order.getAmount());
+            response.setDate(order.getDate());
+            response.setStarRent(order.getStartRent());
+            response.setEndRent(order.getEndRent());
+            getOrderListResponses.add(response);
+
+
+        }
+        return getOrderListResponses;
+    }
+
+    @Override
+    public List<GetOrderListResponse> findByStartDateBetween(LocalDate date1, LocalDate date2) {
+        return orderRepository.findByStartDateBetween(date1, date2);
     }
 }

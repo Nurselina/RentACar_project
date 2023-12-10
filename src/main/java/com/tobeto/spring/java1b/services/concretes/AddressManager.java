@@ -21,6 +21,17 @@ public class AddressManager implements AddressService {
     private final AddressRepository addressRepository;
     @Override
     public void add(AddAddressRequest request) {
+
+        int minaddressText=10;
+
+        if(request.getAddressText().length()< minaddressText){
+            throw new RuntimeException("Karakter sayınız min 10 karakterdir. Lütfen gerekli koşula uyarak adresinizi giriniz.");
+        }
+
+        if (addressRepository.existsByPostalCode(request.getPostalCode().trim()))
+        {
+            throw  new RuntimeException("Aynı posta kodu iki defa eklenemez.");
+        }
         Address address=new Address();
         address.setPostalCode(request.getPostalCode());
         address.setAddressText(request.getAddressText());

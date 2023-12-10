@@ -10,6 +10,7 @@ import com.tobeto.spring.java1b.repositories.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,5 +44,13 @@ public class OrdersController {
     public void delete(@PathVariable int id){
         orderService.delete(id);
 
+    }
+    @GetMapping("findByAmountLessThanEqual")
+    public List<GetOrderListResponse> findByAmountLessThanEqual (@RequestParam double amount){
+        return orderService.findByAmountLessThanEqual(amount);
+    }
+    @GetMapping("findByStartDateBetween")
+    public List<GetOrderListResponse> findByStartDateBetween (@RequestParam LocalDate date1, LocalDate date2){
+        return orderService.findByStartDateBetween(date1, date2);
     }
 }

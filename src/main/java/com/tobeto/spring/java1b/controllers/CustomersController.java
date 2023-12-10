@@ -52,4 +52,16 @@ public class CustomersController {
     public List<GetCustomerListResponse> ignoreName(String name){
         return customerService.ignoreName(name);
     }
+
+    @GetMapping("firstNameAndLastNameLike")
+    public List<GetCustomerListResponse> firstNameAndLastNameLike(@RequestParam String firstName, String lastName){
+        return customerService.firstNameAndLastNameLike(firstName, lastName);
+    }
+
+    @GetMapping("LastNameIsNull")
+    public List<GetCustomerListResponse> findByFirstNameAndLastNameIsNull (@RequestParam String firstName){
+        return customerService.findByFirstNameAndLastNameIsNull(firstName);
+    }
 }
+
+

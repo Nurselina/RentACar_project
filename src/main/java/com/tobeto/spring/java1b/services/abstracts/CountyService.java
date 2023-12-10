@@ -19,5 +19,6 @@ public interface CountyService {
     void delete(int id);
     List<GetCountyListResponse> findByName(String name);
     GetCountyResponse isNotNull ();
+   // List<GetCountyListResponse> findByName1 (String name);
 
 }

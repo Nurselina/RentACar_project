@@ -7,6 +7,7 @@ import com.tobeto.spring.java1b.services.dtos.requests.city.AddCityRequest;
 import com.tobeto.spring.java1b.services.dtos.requests.city.UpdateCityRequest;
 import com.tobeto.spring.java1b.services.dtos.responses.city.GetCityListResponse;
 import com.tobeto.spring.java1b.services.dtos.responses.city.GetCityResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class CitiesController {
        return  cityService.getById(id);
     }
     @PostMapping
-    public void add(@RequestBody AddCityRequest addCityRequest){
+    public void add(@RequestBody @Valid AddCityRequest addCityRequest){
         cityService.add(addCityRequest);
     }
     @PutMapping("{id}")
@@ -54,6 +55,14 @@ public class CitiesController {
     public List<GetCityListResponse> findByName(@RequestParam String name){
 
         return cityService.findByName(name);
+    }
+    @GetMapping("nameIsNotNull")
+    public List<GetCityListResponse> findByNameIsNotNull(){
+        return cityService.findByNameIsNotNull();
+    }
+    @GetMapping("nameIgnoreCase")
+    public List<GetCityListResponse> findByNameIgnoreCase(@RequestParam String name){
+        return cityService.findByNameIgnoreCase(name);
     }
 
 }

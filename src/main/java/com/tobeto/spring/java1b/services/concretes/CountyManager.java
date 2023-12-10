@@ -86,4 +86,9 @@ public class CountyManager implements CountyService {
         countyResponse.setName(county.getName());
         return countyResponse;
     }
+
+  /*  @Override
+    public List<GetCountyListResponse> findByName1(String name) {
+        return countyRepository.findByName1(name);
+    }*/
 }

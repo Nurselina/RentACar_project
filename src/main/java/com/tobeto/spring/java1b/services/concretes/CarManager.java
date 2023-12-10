@@ -54,6 +54,10 @@ public class CarManager implements CarService {
 
     @Override
     public void add(AddCarRequest carAdd) {
+        int modelYear=2023;
+        if (carAdd.getModelYear() < modelYear){
+            throw new RuntimeException("Model yılı 2023'den küçük olamaz..");
+        }
         Car car =new Car();
         car.setModelYear(carAdd.getModelYear());
         car.setModelName(carAdd.getModelName());

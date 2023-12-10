@@ -17,4 +17,6 @@ public interface CityService {
     void delete(int id);
     List<GetCityListResponse> findName(String name);
     List<GetCityListResponse> findByName (String name);
+    List<GetCityListResponse> findByNameIsNotNull();
+    List<GetCityListResponse> findByNameIgnoreCase(String name);
 }

@@ -23,4 +23,6 @@ public interface AddressRepository extends JpaRepository<Address,Integer> {
             "(a.postalCode,a.addressText, new com.tobeto.spring.java1b.services.dtos.responses.city.GetCityListResponse(c.name))" +
             " FROM Address a INNER JOIN a.city c WHERE a.postalCode = :postalCode AND a.addressText = :addressText")
     List<GetAddressListResponse>findByPostalCodeAndAddressText( String postalCode,String addressText);
+
+    boolean existsByPostalCode(String postalCode);
 }

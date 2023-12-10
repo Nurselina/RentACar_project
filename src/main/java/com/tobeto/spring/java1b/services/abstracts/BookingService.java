@@ -19,7 +19,8 @@ public interface BookingService {
     List<GetBookingListResponse> betweenDate (LocalDate date1,LocalDate date2);
     List<GetBookingListResponse> startDateAfter (LocalDate date);
     List<GetBookingListResponse> findByEndDate (LocalDate endDate);
-    List<GetBookingListResponse> endDateIsNull ();
+    List<GetBookingListResponse> findByEndDateOrStartDate (LocalDate startDate,LocalDate endDate);
+
 
 
 }

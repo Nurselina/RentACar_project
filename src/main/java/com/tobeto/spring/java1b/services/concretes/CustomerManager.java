@@ -109,4 +109,14 @@ public class CustomerManager implements CustomerService {
         }
         return getCustomerListResponses;
     }
+
+    @Override
+    public List<GetCustomerListResponse> firstNameAndLastNameLike(String firstName, String lastName) {
+        return customerRepository.findByFirstNameAndLastNameIsContaining(firstName, lastName);
+    }
+
+    @Override
+    public List<GetCustomerListResponse> findByFirstNameAndLastNameIsNull(String firstName) {
+        return customerRepository.findByFirstNameAndLastNameIsNull(firstName);
+    }
 }

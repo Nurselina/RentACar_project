@@ -7,6 +7,7 @@ import com.tobeto.spring.java1b.services.dtos.responses.car.GetCarListResponse;
 import com.tobeto.spring.java1b.services.dtos.responses.car.GetCarResponse;
 import com.tobeto.spring.java1b.entities.Car;
 import com.tobeto.spring.java1b.repositories.CarRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CarsController {
     private final CarService carService;
-
 
 
     @GetMapping
@@ -38,7 +38,7 @@ public class CarsController {
 
     }
     @PostMapping
-    public void add(@RequestBody AddCarRequest carAdd){
+    public void add(@RequestBody @Valid AddCarRequest carAdd){
        carService.add(carAdd);
     }
     @PutMapping("{id}")
@@ -51,4 +51,5 @@ public class CarsController {
         carService.delete(id);
 
     }
+
   }

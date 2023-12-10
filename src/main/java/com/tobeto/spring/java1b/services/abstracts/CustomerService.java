@@ -16,4 +16,6 @@ public interface CustomerService {
     void delete(int id);
     List<GetCustomerListResponse> isNull ();
     List<GetCustomerListResponse> ignoreName(String name);
+    List<GetCustomerListResponse> firstNameAndLastNameLike (String firstName, String lastName);
+    List<GetCustomerListResponse> findByFirstNameAndLastNameIsNull(String firstName);
 }

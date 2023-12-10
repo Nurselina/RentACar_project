@@ -103,8 +103,9 @@ public class BookingManager implements BookingService {
     }
 
     @Override
-    public List<GetBookingListResponse> endDateIsNull() {
-        return bookingRepository.findByEndDate(null);
+    public List<GetBookingListResponse> findByEndDateOrStartDate(LocalDate startDate,LocalDate endDate) {
+        return bookingRepository.findByEndDateOrStartDate(startDate, endDate);
     }
+
 
 }

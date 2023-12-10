@@ -19,7 +19,8 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             " from Booking b WHERE b.endDate = :endDate")
     List<GetBookingListResponse> findByEndDate (LocalDate endDate);
 
-    @Query("select new com.tobeto.spring.java1b.services.dtos.responses.booking.GetBookingListResponse(b.startDate, b.endDate)" +
-            " from Booking b where b.endDate IS NULL")
-    List<GetBookingListResponse> findByEndDateIsNull ();
+   @Query("select new com.tobeto.spring.java1b.services.dtos.responses.booking.GetBookingListResponse(b.startDate, b.endDate)" +
+            " from Booking b where b.startDate= :startDate OR b.endDate= :endDate")
+    List<GetBookingListResponse> findByEndDateOrStartDate(LocalDate startDate,LocalDate endDate);
+
 }

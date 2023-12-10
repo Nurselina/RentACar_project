@@ -5,6 +5,7 @@ import com.tobeto.spring.java1b.services.dtos.requests.address.AddAddressRequest
 import com.tobeto.spring.java1b.services.dtos.requests.address.UpdateAddressRequest;
 import com.tobeto.spring.java1b.services.dtos.responses.address.GetAddressListResponse;
 import com.tobeto.spring.java1b.services.dtos.responses.address.GetAddressResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class AddressesController {
         return addressService.getById(id);
     }
     @PostMapping
-    public void add(@RequestBody AddAddressRequest request){
+    public void add(@RequestBody @Valid AddAddressRequest request){
 
         addressService.add(request);
     }

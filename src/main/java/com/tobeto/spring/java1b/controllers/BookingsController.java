@@ -60,9 +60,9 @@ public class BookingsController {
         return bookingService.findByEndDate(endDate);
     }
 
-    @GetMapping("endDateIsNull")
-    public List<GetBookingListResponse> endDateIsNull (){
-        return bookingService.endDateIsNull();
+   @GetMapping("endDateOrStartDate")
+    public List<GetBookingListResponse> endDateOrStartDate (@RequestParam LocalDate startDate,LocalDate endDate){
+        return bookingService.findByEndDateOrStartDate(startDate,endDate);
     }
 
 }

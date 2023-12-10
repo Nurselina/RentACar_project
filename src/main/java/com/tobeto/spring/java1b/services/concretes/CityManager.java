@@ -42,6 +42,11 @@ public class CityManager implements CityService {
 
     @Override
     public void add(AddCityRequest addCityRequest) {
+        if (addCityRequest.getName() == null || addCityRequest.getName().trim().isEmpty()) {
+            throw new RuntimeException("Şehir adı boş olamaz.");
+        }
+
+
         City city=new City();
         city.setName(addCityRequest.getName());
         cityRepository.save(city);
@@ -49,6 +54,9 @@ public class CityManager implements CityService {
 
     @Override
     public void update(int id, UpdateCityRequest updateCityRequest) throws Exception {
+        if (updateCityRequest.getName().length() < 3) {
+            throw new RuntimeException("Güncellenen şehir adı en az 3 karakterden oluşmalıdır.");
+        }
         Optional<City> optionalCity= cityRepository.findById(id);
 
         if(optionalCity.isPresent()){
@@ -87,6 +95,16 @@ public class CityManager implements CityService {
             getCityListResponses.add(response);
         }
         return getCityListResponses;
+    }
+
+    @Override
+    public List<GetCityListResponse> findByNameIsNotNull() {
+        return cityRepository.findByNameIsNotNull();
+    }
+
+    @Override
+    public List<GetCityListResponse> findByNameIgnoreCase(String name) {
+        return cityRepository.findByNameIgnoreCase(name);
     }
 
 }
